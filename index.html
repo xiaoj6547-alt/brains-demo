@@ -3733,6 +3733,15 @@ function pageHead(title, subtitle, actions = "", eyebrow = "") {
   </header>`;
 }
 
+function formatChinaDate(date = new Date()) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date).replace(/\s/g, "");
+}
+
 function scoreTone(score) {
   if (score >= 85) return "is-red";
   if (score >= 70) return "is-amber";
@@ -3751,7 +3760,7 @@ function renderCases() {
   appView.innerHTML = `
     ${pageHead("预警案件池", "从BRAINS上游预警进入处置队列开始，统一查看案件风险、复杂度与材料完整性。", `
       <button class="button" id="uploadCase">${icon("upload")}导入材料</button>
-      <button class="button button-primary" id="newCase">${icon("plus")}新建预警包</button>`, "当日预警批次 · 2026年7月31日")}
+      <button class="button button-primary" id="newCase">${icon("plus")}新建预警包</button>`, `当日预警批次 · ${formatChinaDate()}`)}
     <section class="metric-band">
       ${metric("inbox", "当日预警", cases.length, "全部进入统一批次")}
       ${metric("files", "已接入材料", materials, "结构化与非结构化")}
@@ -3854,13 +3863,6 @@ function renderParsing() {
       <div><span>预警摘要</span><strong>${escapeHtml(item.summary)}</strong></div>
       <dl><div><dt>材料</dt><dd>${meta.files.length}类</dd></div><div><dt>交易</dt><dd>${meta.transactionMetrics.length}项指标</dd></div><div><dt>证据锚点</dt><dd>${allEvidence.length}项</dd></div><div><dt>待核验</dt><dd>${meta.pending.length}项</dd></div></dl>
     </section>
-    <section class="analysis-pipeline" aria-label="解析链路">
-      ${pipelineStep("scan-line", "01", "文档智能", "OCR · 版面 · 表格")}
-      ${pipelineStep("calculator", "02", "交易特征", "金额 · 频次 · 时序")}
-      ${pipelineStep("brain-circuit", "03", "多模态理解", "文本 · 图像 · 语音")}
-      ${pipelineStep("book-open-check", "04", "知识增强", "规则 · 案例 · 指引")}
-      ${pipelineStep("git-fork", "05", "关系计算", "实体 · 图谱 · 路径")}
-    </section>
     <section class="analysis-workbench">
       <aside class="material-pane">
         <header class="pane-title"><div><strong>案件材料</strong><span>${meta.files.length}类输入</span></div><span class="status-pill status-teal">来源可追溯</span></header>
@@ -3919,10 +3921,6 @@ function renderParsing() {
   if (activeFile.type === "GRAPH") requestAnimationFrame(() => drawNetworkCanvas("parseNetworkCanvas", meta.network));
 }
 
-function pipelineStep(iconName, number, title, detail) {
-  return `<div class="pipeline-step"><span>${icon(iconName)}</span><b>${number}</b><div><strong>${title}</strong><small>${detail}</small></div></div>`;
-}
-
 function findingRow(entry, activeId) {
   const iconName = entry.kind === "fact" ? "badge-check" : entry.kind === "inference" ? "sparkles" : "circle-help";
   return `<button class="finding-row ${entry.id === activeId ? "is-active" : ""} ${entry.kind}" data-evidence-id="${entry.id}" type="button">
@@ -3976,20 +3974,8 @@ function renderMaterialPreview(item, meta, file, selected) {
 
 function renderMaterialSimulation(item, meta, file, selected, simulation) {
   const stage = Math.min(4, Math.max(1, state.materialStage));
-  const stageLabels = ["原始材料", "识别定位", "字段抽取", "证据归并"];
   const sourceLabel = simulation.kind === "audio" ? "原始录音仿真" : "原始材料仿真";
   return `<div class="material-simulation stage-${stage}">
-    <div class="simulation-compact-status" role="status" aria-live="polite" aria-atomic="true">
-      ${icon(stage === 4 ? "badge-check" : "scan-search")}
-      <span>${stage === 4 ? "材料解析完成" : "正在解析材料"}</span>
-      <strong>${stage === 4 ? `${simulation.fields.length}项字段 · ${simulation.mergeItems.length}项证据关联` : "模型处理中"}</strong>
-    </div>
-    <div class="simulation-summary">
-      <span>${icon(stage === 4 ? "badge-check" : "scan-search")}当前阶段：<strong>${stageLabels[stage - 1]}</strong></span>
-      <span>材料编号 ${file.id}</span>
-      <span>${escapeHtml(simulation.record)}</span>
-      <b>综合置信度 ${simulation.confidence}%</b>
-    </div>
     <div class="simulation-body">
       <section class="raw-material-frame">
         <header><div><span>${sourceLabel}</span><strong>${escapeHtml(file.name)}</strong></div><em>${file.type} · ${file.size}</em></header>
