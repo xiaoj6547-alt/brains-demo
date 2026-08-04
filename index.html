@@ -649,7 +649,11 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .score-explain-group > header strong { margin-top: 3px; color: #2b485e; font-size: 16px; }
 .score-explain-group > header > b { min-width: 48px; color: var(--red-700); font-family: "DIN Alternate", Arial, sans-serif; font-size: 28px; font-weight: 800; text-align: right; }
 .score-explain-group.complexity > header > b { color: var(--blue-700); }
-.score-reason-row { min-height: 92px; padding: 13px 16px; border-bottom: 1px solid #e5ebef; }
+.score-reason-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.score-reason-row { min-width: 0; min-height: 92px; padding: 11px 14px; border-right: 1px solid #e5ebef; border-bottom: 1px solid #e5ebef; }
+.score-reason-row:nth-child(2n) { border-right: 0; }
+.score-reason-row:nth-last-child(-n+2):nth-child(odd), .score-reason-row:last-child { border-bottom: 0; }
+.score-reason-row:nth-child(odd):last-child { grid-column: 1 / -1; border-right: 0; }
 .score-reason-row > header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .score-reason-row > header > div strong, .score-reason-row > header > div small { display: block; }
 .score-reason-row > header > div strong { color: #29465c; font-size: 14px; }
@@ -658,13 +662,11 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .score-reason-row > header > span b { color: #ba2c39; font-family: "DIN Alternate", Arial, sans-serif; font-size: 20px; font-weight: 800; text-align: right; }
 .complexity .score-reason-row > header > span b { color: var(--blue-700); }
 .score-reason-row > header > span small { color: #778c9b; font-size: 11px; white-space: nowrap; }
-.score-factor-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
-.score-factor-list > span { padding: 5px 8px; color: #66454a; background: #fff3f4; border: 1px solid #edc9cd; font-size: 12px; white-space: nowrap; }
+.score-factor-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.score-factor-list > span { padding: 4px 7px; color: #66454a; background: #fff3f4; border: 1px solid #edc9cd; font-size: 12px; white-space: nowrap; }
 .score-factor-list > span.complexity { color: #315d80; background: #eef6fb; border-color: #c9ddeb; }
 .score-factor-list > span b { color: #b72b38; font-family: "DIN Alternate", Arial, sans-serif; font-size: 12px; font-weight: 800; }
 .score-factor-list > span.complexity b { color: var(--blue-700); }
-.score-reason-toggle { min-height: 36px; display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 4px 0; color: var(--blue-700); background: transparent; border: 0; font-size: 12px; font-weight: 700; cursor: pointer; }
-.score-reason-toggle svg { width: 15px; height: 15px; }
 .score-calculation { min-height: 66px; display: grid; grid-template-columns: 1fr 18px 1fr 18px 1fr; align-items: center; padding: 9px 14px; background: #eef3f6; border-top: 1px solid var(--line); text-align: center; }
 .score-calculation div span, .score-calculation div strong { display: block; }
 .score-calculation div span { color: #758a99; font-size: 11px; }
@@ -1497,12 +1499,16 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .risk-action-status > .button { width: calc(100% - 28px); margin: 0 14px; }
 
 @media (min-width: 901px) {
-  .score-reason-row { min-height: 82px; padding: 11px 16px; }
+  .score-reason-row { min-height: 88px; }
   .score-reason-row > header > div strong { font-size: 13px; }
   .score-reason-row > header > div small, .score-reason-row > header > span small { font-size: 10px; }
-  .score-factor-list { gap: 6px; margin-top: 8px; }
+  .score-factor-list { gap: 5px; margin-top: 7px; }
   .score-factor-list > span, .score-factor-list > span b { font-size: 11px; }
-  .score-reason-toggle { min-height: 32px; margin-top: 6px; font-size: 11px; }
+}
+
+@media (max-width: 1440px) {
+  .score-explain-columns { grid-template-columns: 1fr; }
+  .score-explain-group:first-child { border-right: 0; border-bottom: 1px solid var(--line); }
 }
 
 .detail-drawer { width: min(440px, 94vw); position: fixed; z-index: 70; inset: 0 0 0 auto; overflow: auto; transform: translateX(102%); color: var(--ink); background: #fff; border-left: 1px solid var(--line); box-shadow: -16px 0 36px rgba(8, 26, 43, .18); transition: transform 180ms ease; }
@@ -1744,6 +1750,9 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
   .score-reason-row > header > span small { white-space: normal; }
   .score-calculation { grid-template-columns: 1fr 14px 1fr 14px 1fr; padding: 8px; }
   .score-factor-list > span { white-space: normal; }
+  .score-reason-list { grid-template-columns: 1fr; }
+  .score-reason-row, .score-reason-row:nth-child(2n), .score-reason-row:nth-child(odd):last-child { grid-column: auto; border-right: 0; border-bottom: 1px solid #e5ebef; }
+  .score-reason-row:last-child { border-bottom: 0; }
   .simulation-summary { flex-wrap: wrap; gap: 6px 12px; }
   .simulation-summary span:first-child { width: 100%; margin-right: 0; }
   .raw-material-frame { padding: 10px; }
@@ -2908,25 +2917,6 @@ window.BRAINS_DEMO = {
     };
   }
 
-  function toggleScoreGroup(expandedGroups, key) {
-    if (!(expandedGroups instanceof Set) || !key) return false;
-    if (expandedGroups.has(key)) {
-      expandedGroups.delete(key);
-      return false;
-    }
-    expandedGroups.add(key);
-    return true;
-  }
-
-  function restoreScoreToggleFocus(root, key) {
-    if (!root || typeof root.querySelectorAll !== "function" || !key) return false;
-    const control = [...root.querySelectorAll("[data-score-toggle]")]
-      .find((button) => button.dataset.scoreToggle === key);
-    if (!control || typeof control.focus !== "function") return false;
-    control.focus();
-    return true;
-  }
-
   function beginParsingAnimation(state) {
     state.parsingGeneration = (Number(state.parsingGeneration) || 0) + 1;
     state.parsingAnimating = true;
@@ -2957,7 +2947,6 @@ window.BRAINS_DEMO = {
     }
 
     state.currentCaseId = normalizedCaseId;
-    state.expandedScoreGroups.clear();
     state.networkExpanded = false;
     state.selectedNetworkNodeId = null;
     cancelParsingAnimation(state);
@@ -3274,8 +3263,6 @@ window.BRAINS_DEMO = {
     partitionScoreReasons,
     resolveProfileEvidenceNetwork,
     restoreNetworkViewport,
-    restoreScoreToggleFocus,
-    toggleScoreGroup,
     transitionCaseState,
     validateAssistantQuestion,
     selectEvidenceNetworkView,
@@ -3396,7 +3383,6 @@ const state = {
   materialStage: 4,
   parsingAnimating: false,
   parsingGeneration: 0,
-  expandedScoreGroups: new Set(),
   networkExpanded: false,
   selectedNetworkNodeId: null,
   selectedStaffId: "U001",
@@ -4103,18 +4089,6 @@ function renderProfile() {
         </div>
       </article>
     </section>`;
-  $$("[data-score-toggle]").forEach((button) => button.addEventListener("click", () => {
-    const networkViewport = uiLogic.captureNetworkViewport(appView);
-    const key = button.dataset.scoreToggle;
-    uiLogic.toggleScoreGroup(state.expandedScoreGroups, key);
-    renderProfile();
-    refreshIcons();
-    uiLogic.restoreScoreToggleFocus(appView, key);
-    uiLogic.restoreNetworkViewport(appView, {
-      nodeId: state.selectedNetworkNodeId || "",
-      scrollState: networkViewport,
-    });
-  }));
   $("#backParsing").addEventListener("click", () => navigate(casePath("parsing")));
   $("#toAssistant").addEventListener("click", () => navigate(casePath("assistant")));
   bindProfileNetworkInteractions();
@@ -4444,17 +4418,14 @@ function scoreExplainGroup(type, title, finalScore, components, breakdowns, corr
 
 function scoreReasonRow(label, score, detail, weight, parts = [], type) {
   const contribution = score * weight / 100;
-  const groupKey = `${type}:${label}`;
-  const expanded = state.expandedScoreGroups.has(groupKey);
   const { visible, hidden } = uiLogic.partitionScoreReasons(parts);
-  const shown = expanded ? [...visible, ...hidden] : visible;
-  return `<article class="score-reason-row ${expanded ? "is-expanded" : ""}">
+  const shown = [...visible, ...hidden];
+  return `<article class="score-reason-row">
     <header>
       <div><strong>${escapeHtml(label)}</strong><small>${escapeHtml(detail)}</small></div>
       <span><b>${score}</b><small>权重${weight}% · 贡献${contribution.toFixed(1)}</small></span>
     </header>
     <div class="score-factor-list">${shown.map(([name, points]) => `<span class="${type}">${escapeHtml(name)} <b>+${points}</b></span>`).join("")}</div>
-    ${hidden.length ? `<button class="score-reason-toggle" data-score-toggle="${escapeHtml(groupKey)}" type="button" aria-expanded="${expanded}">${expanded ? "收起依据" : `展开全部依据（${hidden.length}）`}${icon(expanded ? "chevron-up" : "chevron-down")}</button>` : ""}
   </article>`;
 }
 
