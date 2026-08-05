@@ -1484,15 +1484,16 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .emerging-patterns small { color: #788d9d; font-size: 8px; }
 .risk-heatmap, .kyc-matrix { display: grid; grid-template-columns: 82px repeat(var(--heat-columns, 4), minmax(38px, 1fr)); gap: 4px; align-items: stretch; }
 .risk-heatmap > strong, .kyc-matrix > strong { display: grid; place-items: end center; min-height: 30px; color: #6d8292; font-size: 7px; text-align: center; }
-.risk-heatmap > b, .kyc-matrix > b { display: flex; align-items: center; color: #3d5a70; font-size: 8px; }
-.risk-heatmap > b.is-selected, .kyc-matrix > b.is-selected { color: var(--blue-700); font-weight: 800; }
+.risk-heatmap > b, .kyc-matrix > b, .heat-row-label { display: flex; align-items: center; color: #3d5a70; font-size: 8px; }
+.heat-row-label { min-width: 0; padding: 0 4px; background: transparent; border: 0; text-align: left; }
+.risk-heatmap > b.is-selected, .kyc-matrix > b.is-selected, .heat-row-label.is-selected { color: var(--blue-700); font-weight: 800; }
 .risk-heatmap button, .kyc-matrix button { min-height: 36px; color: #fff; border: 1px solid rgba(255, 255, 255, .7); font: 800 9px "DIN Alternate", Arial, sans-serif; }
 .heat-1, .matrix-1 { background: #dceaf1; color: #35566c !important; }
 .heat-2, .matrix-2 { background: #9fc7d8; }
 .heat-3, .matrix-3 { background: #4d94b5; }
 .heat-4, .matrix-4 { background: #1767a0; }
 .heat-5, .matrix-5 { background: #b52b38; }
-.risk-heatmap button:hover, .kyc-matrix button:hover { box-shadow: inset 0 0 0 2px #fff; }
+.risk-heatmap button:not(.heat-row-label):hover, .kyc-matrix button:not(.heat-row-label):hover, .risk-heatmap button.is-selected, .kyc-matrix button.is-selected { box-shadow: inset 0 0 0 2px #fff, 0 0 0 2px var(--gold-600); }
 .kyc-donut { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 10px; align-items: center; }
 .kyc-donut svg { width: 140px; height: 140px; transform: rotate(-90deg); }
 .kyc-donut svg text { fill: #28485f; font: 800 15px "DIN Alternate", Arial, sans-serif; transform: rotate(90deg); transform-origin: 70px 70px; }
@@ -1511,6 +1512,101 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .kyc-field-ranking i b { height: 100%; display: block; background: var(--teal-600); }
 .kyc-field-ranking em { grid-row: 1 / 3; grid-column: 2; text-align: right; }
 .kyc-matrix { --heat-columns: 4; }
+.risk-management-cockpit { display: grid; grid-template-columns: minmax(0, 2fr) minmax(300px, .72fr); gap: 12px; margin-top: 12px; }
+.risk-management-main { min-width: 0; display: grid; gap: 12px; }
+.risk-trend-panel, .risk-detail-panel, .current-institution-panel, .risk-closure-grid > article { min-width: 0; background: #fff; border: 1px solid var(--line-strong); }
+.risk-trend-panel > header { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 15px; color: #fff; background: var(--navy-900); border-bottom: 3px solid var(--red-600); }
+.risk-trend-panel > header span, .risk-trend-panel > header h2, .risk-trend-panel > header p, .risk-trend-panel > header strong, .risk-trend-panel > header small { display: block; }
+.risk-trend-panel > header span { color: #8fc4e0; font-size: 8px; font-weight: 750; }
+.risk-trend-panel > header h2 { margin: 3px 0 2px; font-size: 16px; }
+.risk-trend-panel > header p { margin: 0; color: #acc1d0; font-size: 9px; }
+.risk-trend-panel > header > strong { color: #fff; font: 800 25px "DIN Alternate", Arial, sans-serif; text-align: right; }
+.risk-trend-panel > header > strong small { margin-top: 2px; color: #a9becd; font: 700 8px inherit; }
+.risk-trend-content { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(260px, .8fr); }
+.risk-trend-content > section { min-width: 0; min-height: 255px; padding: 13px; }
+.risk-trend-content > section:first-child { border-right: 1px solid var(--line); }
+.risk-trend-content .risk-line-chart { max-height: 205px; }
+.risk-detail-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.risk-detail-panel > section { min-width: 0; min-height: 218px; padding: 13px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.risk-detail-panel > section:nth-child(2n) { border-right: 0; }
+.risk-detail-panel > section:nth-last-child(-n+2) { border-bottom: 0; }
+.risk-detail-panel .kyc-donut { grid-template-columns: 112px minmax(0, 1fr); }
+.risk-detail-panel .kyc-donut svg { width: 112px; height: 112px; }
+.risk-detail-panel .compact-trend .risk-line-chart { max-height: 150px; }
+.risk-detail-panel .compact-trend .risk-chart-legend { margin-top: 0; }
+.current-institution-panel { align-self: stretch; display: flex; flex-direction: column; }
+.current-institution-panel > header { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; color: #fff; background: var(--navy-900); border-bottom: 3px solid var(--gold-600); }
+.current-institution-panel > header span { display: block; color: #8fc4e0; font-size: 8px; font-weight: 750; }
+.current-institution-panel > header h2 { margin: 3px 0 0; font-size: 15px; }
+.current-institution-panel > header em { padding: 4px 7px; color: #f6d898; background: rgba(198,145,47,.16); border: 1px solid rgba(246,216,152,.35); font-size: 8px; font-style: normal; font-weight: 750; }
+.institution-identity { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 10px; align-items: center; padding: 14px; border-bottom: 1px solid var(--line); }
+.institution-identity > span { width: 40px; height: 40px; display: grid; place-items: center; color: #fff; background: var(--blue-600); }
+.institution-identity svg { width: 20px; height: 20px; }
+.institution-identity strong, .institution-identity small { display: block; }
+.institution-identity strong { color: #203e55; font-size: 15px; }
+.institution-identity small { margin-top: 4px; color: #718899; font-size: 8px; line-height: 1.45; }
+.institution-theme-chip { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 7px; align-items: center; padding: 8px 14px; color: #60798b; background: #f4f8fa; border-bottom: 1px solid var(--line); font-size: 8px; }
+.institution-theme-chip strong { color: #29485f; font-size: 9px; }
+.institution-theme-chip em { color: var(--red-700); font-style: normal; font-weight: 750; }
+.institution-key-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.institution-key-metrics > div { min-width: 0; padding: 10px 9px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.institution-key-metrics > div:nth-child(2n) { border-right: 0; }
+.institution-key-metrics > div:nth-last-child(-n+2) { border-bottom: 0; }
+.institution-key-metrics span, .institution-key-metrics strong, .institution-key-metrics small { display: block; }
+.institution-key-metrics span { color: #728899; font-size: 8px; }
+.institution-key-metrics strong { margin: 4px 0 2px; color: #183f61; font: 800 18px "DIN Alternate", Arial, sans-serif; }
+.institution-key-metrics small { min-height: 24px; color: #657f92; font-size: 7px; line-height: 1.4; }
+.institution-report-quality { margin: 11px 14px 0; padding: 9px 10px; border-left: 3px solid var(--blue-600); background: #edf5f9; }
+.institution-report-quality span, .institution-report-quality strong { display: block; }
+.institution-report-quality span { color: #6a8293; font-size: 7px; font-weight: 750; }
+.institution-report-quality strong { margin-top: 4px; color: #29485f; font-size: 8px; line-height: 1.55; }
+.institution-report-quality.is-alert { border-left-color: var(--red-600); background: #fff1f1; }
+.institution-report-quality.is-alert strong { color: #9e2934; }
+.institution-report-quality.is-strong { border-left-color: var(--teal-600); background: #edf8f6; }
+.institution-driver-list, .institution-quality-bars { padding: 13px 14px; border-bottom: 1px solid var(--line); }
+.institution-driver-list h3, .institution-quality-bars h3 { margin: 0 0 8px; color: #29475e; font-size: 10px; }
+.institution-driver-list > div { min-height: 34px; display: grid; grid-template-columns: 20px 1fr; gap: 7px; align-items: center; border-bottom: 1px solid #e8edf1; }
+.institution-driver-list > div:last-child { border-bottom: 0; }
+.institution-driver-list i { width: 18px; height: 18px; display: grid; place-items: center; color: #fff; background: var(--navy-800); font: 700 8px "DIN Alternate", Arial, sans-serif; font-style: normal; }
+.institution-driver-list span { color: #435f73; font-size: 8px; line-height: 1.45; }
+.institution-quality-bars { display: grid; gap: 7px; }
+.institution-quality-bars h3 { margin-bottom: 2px; }
+.institution-quality-bars > div { display: grid; grid-template-columns: 42px 1fr 24px; gap: 7px; align-items: center; }
+.institution-quality-bars span, .institution-quality-bars strong { color: #587286; font-size: 8px; }
+.institution-quality-bars i { height: 6px; overflow: hidden; background: #e5edf1; }
+.institution-quality-bars i b { height: 100%; display: block; background: var(--teal-600); }
+.institution-quality-bars strong { text-align: right; }
+.institution-linkage { display: grid; grid-template-columns: 30px 1fr; gap: 8px; align-items: center; margin: 12px 14px 0; padding: 10px; color: #fff; background: var(--navy-800); }
+.institution-linkage > span { width: 28px; height: 28px; display: grid; place-items: center; color: var(--gold-600); }
+.institution-linkage svg { width: 17px; height: 17px; }
+.institution-linkage strong, .institution-linkage small { display: block; }
+.institution-linkage strong { font-size: 9px; }
+.institution-linkage small { margin-top: 3px; color: #b8cad7; font-size: 7px; line-height: 1.4; }
+.institution-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding: 12px 14px 14px; }
+.institution-actions .button { min-width: 0; justify-content: center; padding-inline: 8px; font-size: 8px; }
+.risk-closure-grid { display: grid; grid-template-columns: .85fr 1.2fr 1fr; gap: 12px; margin-top: 12px; }
+.risk-closure-grid > article { min-height: 220px; padding: 13px; }
+.selected-linked-insight { display: flex; flex-direction: column; }
+.linkage-flow { display: grid; grid-template-columns: minmax(0, 1fr) 26px minmax(0, 1fr); gap: 8px; align-items: center; padding: 12px; background: #f3f7f9; }
+.linkage-flow > svg { width: 17px; height: 17px; color: var(--gold-600); }
+.linkage-flow span, .linkage-flow strong { display: block; }
+.linkage-flow span { color: #778c9b; font-size: 8px; }
+.linkage-flow strong { margin-top: 4px; color: #28475e; font-size: 9px; line-height: 1.45; }
+.selected-linked-insight > p { margin: 12px 0; color: #60798c; font-size: 8px; line-height: 1.6; }
+.selected-linked-insight > button, .closure-status-panel > button { width: fit-content; display: inline-flex; align-items: center; gap: 5px; margin-top: auto; padding: 0; color: var(--blue-700); background: transparent; border: 0; font-size: 8px; font-weight: 750; }
+.selected-linked-insight > button svg, .closure-status-panel > button svg { width: 12px; height: 12px; }
+.closure-status-counts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); }
+.closure-status-counts > div { padding: 9px 5px; border-right: 1px solid var(--line); text-align: center; }
+.closure-status-counts > div:last-child { border-right: 0; }
+.closure-status-counts strong, .closure-status-counts span { display: block; }
+.closure-status-counts strong { color: #21445f; font: 800 16px "DIN Alternate", Arial, sans-serif; }
+.closure-status-counts span { margin-top: 3px; color: #768c9d; font-size: 7px; }
+.latest-feedback { display: grid; grid-template-columns: 30px 1fr; gap: 8px; align-items: center; margin: 11px 0; padding: 10px; background: var(--gold-100); }
+.latest-feedback > span { width: 28px; height: 28px; display: grid; place-items: center; color: var(--gold-700); }
+.latest-feedback svg { width: 16px; height: 16px; }
+.latest-feedback strong, .latest-feedback small { display: block; }
+.latest-feedback strong { color: #6f582e; font-size: 8px; }
+.latest-feedback small { margin-top: 3px; color: #806d4d; font-size: 7px; line-height: 1.5; }
 .linked-insights { margin-top: 12px; background: #fff; border: 1px solid var(--line-strong); }
 .linked-insights > header { min-height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 11px 16px; border-bottom: 1px solid var(--line); }
 .linked-insights > header span { color: var(--gold-700); font-size: 8px; font-weight: 750; letter-spacing: .8px; }
@@ -1630,6 +1726,13 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
   .risk-kpi:nth-child(3n) { border-right: 0; }
   .risk-kpi:nth-child(-n+3) { border-bottom: 1px solid var(--line); }
   .risk-domain-stack { grid-template-columns: 1fr; }
+  .risk-management-cockpit { grid-template-columns: 1fr; }
+  .current-institution-panel { display: grid; grid-template-columns: 1fr 1fr; }
+  .current-institution-panel > header, .institution-identity, .institution-theme-chip, .institution-key-metrics, .institution-report-quality, .institution-actions { grid-column: 1 / -1; }
+  .institution-driver-list { border-right: 1px solid var(--line); }
+  .institution-linkage { margin-bottom: 12px; }
+  .risk-closure-grid { grid-template-columns: 1fr 1fr; }
+  .risk-closure-grid > article:last-child { grid-column: 1 / -1; min-height: 0; }
   .risk-action-layout { grid-template-columns: 240px minmax(0, 1fr); }
   .risk-action-layout > *:not(:last-child) { border-right: 1px solid var(--line); }
   .risk-action-layout > .risk-action-editor { border-right: 0; }
@@ -1697,6 +1800,12 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 
 @media (max-width: 900px) {
   .risk-filter-bar { grid-template-columns: repeat(2, minmax(140px, 1fr)); }
+  .risk-trend-content, .risk-detail-panel { grid-template-columns: 1fr; }
+  .risk-trend-content > section:first-child, .risk-detail-panel > section { border-right: 0; border-bottom: 1px solid var(--line); }
+  .risk-detail-panel > section:last-child { border-bottom: 0; }
+  .risk-detail-panel > section:nth-last-child(2) { border-bottom: 1px solid var(--line); }
+  .risk-closure-grid { grid-template-columns: 1fr; }
+  .risk-closure-grid > article:last-child { grid-column: auto; }
   .risk-filter-bar label:nth-child(n+3) { border-top: 1px solid #29445c; }
   .linked-insights > header { align-items: flex-start; flex-direction: column; gap: 5px; }
   .linked-insights > header p { max-width: none; text-align: left; }
@@ -1755,6 +1864,13 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
   .risk-kpi:nth-child(3n) { border-right: 1px solid var(--line); }
   .risk-kpi:nth-child(2n) { border-right: 0; }
   .risk-kpi:nth-last-child(-n+2) { border-bottom: 0; }
+  .current-institution-panel { display: flex; }
+  .institution-key-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .institution-actions { grid-template-columns: 1fr; }
+  .risk-trend-panel > header { align-items: flex-start; }
+  .risk-trend-content > section, .risk-detail-panel > section, .risk-closure-grid > article { min-height: 0; }
+  .risk-detail-panel .kyc-donut { grid-template-columns: 104px minmax(0, 1fr); }
+  .risk-detail-panel .kyc-donut svg { width: 104px; height: 104px; }
   .risk-domain-panel > header { align-items: flex-start; }
   .risk-domain-grid { grid-template-columns: 1fr; }
   .risk-domain-grid > section, .risk-domain-grid > section:nth-child(2n), .risk-domain-grid > section:nth-last-child(-n+2) { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -2869,13 +2985,47 @@ window.BRAINS_DEMO = {
     compareOptions: [["previous", "较上期"], ["year", "较去年同期"]],
     months: ["8月", "9月", "10月", "11月", "12月", "1月", "2月", "3月", "4月", "5月", "6月", "7月"],
     summary: [
-      { key: "str", label: "STR上报量", value: 83, unit: "件", change: 15.3, note: "企业账户归集快转贡献最大", tone: "red", icon: "shield-alert" },
-      { key: "themes", label: "高风险主题", value: 4, unit: "类", change: 1, note: "跨境分层回流为本期新增", tone: "amber", icon: "scan-search" },
-      { key: "institution", label: "增幅最大机构", value: "广东分行", unit: "", change: 28.6, note: "公司客户风险集中上升", tone: "blue", icon: "building-2" },
+      { key: "report_rate", label: "可疑上报率", value: 32.6, unit: "%", change: 4.1, changeUnit: "pp", note: "需结合复核维持率判断口径", tone: "red", icon: "file-up" },
+      { key: "review_uphold", label: "复核维持率", value: 82.7, unit: "%", change: -3.6, changeUnit: "pp", note: "低于目标，关注证据充分性", tone: "amber", icon: "badge-check" },
+      { key: "institution", label: "当前关注机构", value: "广东分行", unit: "", change: 28.6, note: "公司客户风险集中上升", tone: "blue", icon: "building-2" },
       { key: "kyc", label: "KYC问题率", value: 18.7, unit: "%", change: -2.4, note: "较上期下降但仍高于目标", tone: "teal", icon: "contact-round" },
       { key: "fields", label: "待整改字段", value: 216, unit: "项", change: -11.2, note: "经营范围与受益所有人居前", tone: "blue", icon: "list-checks" },
-      { key: "link", label: "风险与KYC关联", value: 61, unit: "%", change: 7.8, note: "高风险样本伴随基础信息问题", tone: "amber", icon: "link-2" },
+      { key: "rectification", label: "整改完成率", value: 82, unit: "%", change: 8, note: "反馈闭环持续改善", tone: "teal", icon: "clipboard-check" },
     ],
+    institutionProfiles: {
+      beijing: {
+        label: "北京分行", change: 18.4, rank: 3, primaryThemeId: "RB-STR-03", kycBriefingId: "RB-KYC-02",
+        reportRate: 27.8, peerMedianReportRate: 31.4, reviewUpholdRate: 88.6, peerMedianUpholdRate: 86.2,
+        reportQualityAssessment: "报可疑率低于同业且复核维持率较高，处置口径较稳健。",
+        note: "跑分账户迁移关注度上升",
+        reasons: ["新开户账户与共用设备关联增多", "账户用途与职业收入偏差集中", "相关客户信息更新仍有滞后"],
+        latestFeedback: "个人金融部已启动账户用途与职业收入专项核验。",
+      },
+      shanghai: {
+        label: "上海分行", change: 16.9, rank: 2, primaryThemeId: "RB-STR-02", kycBriefingId: "RB-KYC-03",
+        reportRate: 34.1, peerMedianReportRate: 31.7, reviewUpholdRate: 91.2, peerMedianUpholdRate: 87.1,
+        reportQualityAssessment: "上报率略高但复核维持率同步较高，风险集中判断较可信。",
+        note: "跨境资金分层回流较集中",
+        reasons: ["跨境贸易资金回流路径层级增加", "境外关联方信息完整度偏低", "受益所有人材料更新不及时"],
+        latestFeedback: "国际业务部正在补充境外交易对手与贸易单据。",
+      },
+      guangdong: {
+        label: "广东分行", change: 28.6, rank: 1, primaryThemeId: "RB-STR-01", kycBriefingId: "RB-KYC-03",
+        reportRate: 46.8, peerMedianReportRate: 32.5, reviewUpholdRate: 68.4, peerMedianUpholdRate: 86.8,
+        reportQualityAssessment: "上报率显著高于同业且复核维持率偏低，需抽查是否存在宽泛上报。",
+        note: "公司客户风险集中上升",
+        reasons: ["企业账户归集快转样本连续三期上升", "可疑上报率高于同业中位数14.3个百分点", "复核维持率低于同业中位数18.4个百分点"],
+        latestFeedback: "公司金融部已接收提示，正在核实客户经营背景和主要交易对手。",
+      },
+      jiangsu: {
+        label: "江苏分行", change: 13.6, rank: 4, primaryThemeId: "RB-STR-04", kycBriefingId: "RB-KYC-04",
+        reportRate: 29.6, peerMedianReportRate: 31.2, reviewUpholdRate: 84.8, peerMedianUpholdRate: 86.1,
+        reportQualityAssessment: "两项指标接近同业，重点关注夜间拆分证据完整性。",
+        note: "夜间高频拆分交易需关注",
+        reasons: ["夜间拆分交易笔数较上期增加", "新增大额交易对手说明不足", "部分客户交易目的字段缺失"],
+        latestFeedback: "渠道管理岗已开展夜间交易客户信息补录。",
+      },
+    },
     str: {
       totalSeries: [31, 35, 33, 41, 45, 43, 52, 58, 61, 65, 72, 83],
       series: [
@@ -5156,7 +5306,7 @@ function renderRegulatoryLibrary() {
   const institutionCount = state.regulatoryEvents.filter((item) => item.target_type === "机构").length;
   return `
     <section class="knowledge-overview regulatory-overview">
-      <div><span>演示知识库</span><strong>${stats.event_count}</strong><small>从${stats.source_record_count}条事件自动锁定</small></div>
+      <div><span>演示知识库</span><strong>${stats.event_count}</strong></div>
       <div><span>监管义务</span><strong>${stats.duty_count}</strong><small>用于案件合规核对</small></div>
       <div><span>机构处罚</span><strong>${institutionCount}</strong><small>其余为责任人员事件</small></div>
       <div><span>最新处罚日期</span><strong class="overview-date">${stats.latest_penalty_date}</strong><small>来源链接可追溯</small></div>
@@ -5717,10 +5867,39 @@ function riskScaled(value, minimum = 1) {
 
 function riskSummaryValue(item) {
   if (["str", "fields"].includes(item.key)) return `${riskScaled(item.value)}${item.unit}`;
-  if (item.key === "institution" && state.riskFilters.institution !== "all") {
-    return demo.riskManagement.institutions.find(([id]) => id === state.riskFilters.institution)?.[1] || item.value;
-  }
+  if (item.key === "institution") return currentRiskInstitution().label;
+  if (state.riskFilters.institution !== "all" && item.key === "report_rate") return `${currentRiskInstitution().reportRate}%`;
+  if (state.riskFilters.institution !== "all" && item.key === "review_uphold") return `${currentRiskInstitution().reviewUpholdRate}%`;
   return `${item.value}${item.unit}`;
+}
+
+function currentRiskInstitutionId() {
+  return state.riskFilters.institution !== "all" ? state.riskFilters.institution : "guangdong";
+}
+
+function currentRiskInstitution() {
+  const id = currentRiskInstitutionId();
+  return { id, ...(demo.riskManagement.institutionProfiles?.[id] || { label: "广东分行", change: 28.6, rank: 1, primaryThemeId: "RB-STR-01", kycBriefingId: "RB-KYC-03", note: "公司客户风险集中上升", reasons: [], latestFeedback: "" }) };
+}
+
+function riskSummaryMeta(item) {
+  const profile = currentRiskInstitution();
+  if (item.key === "institution") return { ...item, change: profile.change, note: profile.note };
+  if (state.riskFilters.institution === "all") return item;
+  if (item.key === "report_rate") {
+    const gap = Number((profile.reportRate - profile.peerMedianReportRate).toFixed(1));
+    return { ...item, change: gap, note: `同业中位数${profile.peerMedianReportRate}%` };
+  }
+  if (item.key === "review_uphold") {
+    const gap = Number((profile.reviewUpholdRate - profile.peerMedianUpholdRate).toFixed(1));
+    return { ...item, change: gap, note: `同业中位数${profile.peerMedianUpholdRate}%` };
+  }
+  return item;
+}
+
+function riskSummaryChangeLabel(item) {
+  const sign = item.change > 0 ? "+" : "";
+  return `${sign}${item.change}${item.changeUnit === "pp" ? "个百分点" : "%"}`;
 }
 
 function chartPoints(values, width, height, padding, maxValue) {
@@ -5763,7 +5942,8 @@ function heatTone(value) {
 
 function renderRiskHeatmap(heatmap) {
   const themeIds = demo.riskManagement.str.themes.map((item) => item.id);
-  return `<div class="risk-heatmap" style="--heat-columns:${heatmap.columns.length}"><span></span>${heatmap.columns.map((column) => `<strong>${escapeHtml(column)}</strong>`).join("")}${heatmap.rows.map((row) => `<b class="${state.riskFilters.institution === row.id ? "is-selected" : ""}">${escapeHtml(row.label)}</b>${row.values.map((value, index) => `<button class="heat-${heatTone(value)}" data-open-risk-action="${themeIds[index]}" data-risk-institution="${row.id}" type="button" title="${escapeHtml(row.label)} · ${escapeHtml(heatmap.columns[index])}：${value}">${value}</button>`).join("")}`).join("")}</div>`;
+  const selectedInstitution = currentRiskInstitutionId();
+  return `<div class="risk-heatmap" style="--heat-columns:${heatmap.columns.length}"><span></span>${heatmap.columns.map((column) => `<strong>${escapeHtml(column)}</strong>`).join("")}${heatmap.rows.map((row) => `<button class="heat-row-label ${selectedInstitution === row.id ? "is-selected" : ""}" data-risk-institution-only="${row.id}" type="button">${escapeHtml(row.label)}</button>${row.values.map((value, index) => `<button class="heat-${heatTone(value)} ${selectedInstitution === row.id && state.selectedBriefingId === themeIds[index] ? "is-selected" : ""}" data-risk-heat-cell data-risk-theme="${themeIds[index]}" data-risk-institution="${row.id}" type="button" title="选择${escapeHtml(row.label)} · ${escapeHtml(heatmap.columns[index])}：${value}">${value}</button>`).join("")}`).join("")}</div>`;
 }
 
 function renderRiskDonut(items) {
@@ -5778,12 +5958,67 @@ function renderRiskDonut(items) {
 
 function renderKycMatrix(items) {
   const dimensions = [["completeness", "完整"], ["timeliness", "及时"], ["consistency", "一致"], ["rectification", "整改"]];
-  return `<div class="kyc-matrix"><span></span>${dimensions.map(([, label]) => `<strong>${label}</strong>`).join("")}${items.map((item) => `<b class="${state.riskFilters.institution === item.id ? "is-selected" : ""}">${item.label}</b>${dimensions.map(([key]) => `<button class="matrix-${heatTone(item[key])}" data-risk-institution-only="${item.id}" type="button" title="${item.label} ${item[key]}分">${item[key]}</button>`).join("")}`).join("")}</div>`;
+  const selectedInstitution = currentRiskInstitutionId();
+  return `<div class="kyc-matrix"><span></span>${dimensions.map(([, label]) => `<strong>${label}</strong>`).join("")}${items.map((item) => `<button class="heat-row-label ${selectedInstitution === item.id ? "is-selected" : ""}" data-risk-institution-only="${item.id}" type="button">${item.label}</button>${dimensions.map(([key]) => `<button class="matrix-${heatTone(item[key])} ${selectedInstitution === item.id ? "is-selected" : ""}" data-risk-institution-only="${item.id}" type="button" title="选择${item.label} · ${key} ${item[key]}分">${item[key]}</button>`).join("")}`).join("")}</div>`;
+}
+
+function currentInstitutionDiagnostics() {
+  const management = demo.riskManagement;
+  const profile = currentRiskInstitution();
+  const heatRow = management.str.heatmap.rows.find((row) => row.id === profile.id) || management.str.heatmap.rows[0];
+  const kyc = management.kyc.institutions.find((item) => item.id === profile.id) || management.kyc.institutions[0];
+  const selectedTheme = management.str.themes.find((item) => item.id === state.selectedBriefingId);
+  const primaryTheme = selectedTheme || management.str.themes.find((item) => item.id === profile.primaryThemeId) || management.str.themes[0];
+  const themeIndex = management.str.themes.findIndex((item) => item.id === primaryTheme.id);
+  const themeScore = heatRow.values[Math.max(themeIndex, 0)];
+  const issueRate = Math.max(0, 100 - (kyc.completeness + kyc.timeliness + kyc.consistency) / 3);
+  const dimensions = [
+    ["完整性", kyc.completeness],
+    ["及时性", kyc.timeliness],
+    ["一致性", kyc.consistency],
+    ["整改率", kyc.rectification],
+  ];
+  const gaps = dimensions.slice(0, 3).sort((a, b) => a[1] - b[1]).slice(0, 2);
+  const insight = management.insights.find((item) => item.institutionId === profile.id) || management.insights[0];
+  const reportRateGap = Number((profile.reportRate - profile.peerMedianReportRate).toFixed(1));
+  const upholdRateGap = Number((profile.reviewUpholdRate - profile.peerMedianUpholdRate).toFixed(1));
+  const reportQualityTone = reportRateGap >= 8 && upholdRateGap <= -8 ? "alert" : reportRateGap > 0 && upholdRateGap > 0 ? "strong" : "steady";
+  return { profile, heatRow, kyc, primaryTheme, themeScore, issueRate, dimensions, gaps, insight, reportRateGap, upholdRateGap, reportQualityTone };
+}
+
+function renderCurrentInstitutionDiagnosis() {
+  const { profile, kyc, primaryTheme, themeScore, issueRate, dimensions, gaps, insight, upholdRateGap, reportQualityTone } = currentInstitutionDiagnostics();
+  return `<aside class="current-institution-panel">
+    <header><div><span>CURRENT FOCUS</span><h2>当前关注机构</h2></div><em>辖内关注度第${profile.rank}</em></header>
+    <div class="institution-identity"><span>${icon("building-2")}</span><div><strong>${escapeHtml(profile.label)}</strong><small>较上期 +${profile.change}% · ${escapeHtml(profile.note)}</small></div></div>
+    <div class="institution-theme-chip"><span>重点主题</span><strong>${escapeHtml(primaryTheme.label)}</strong><em>热度${themeScore}</em></div>
+    <div class="institution-key-metrics"><div><span>可疑上报率</span><strong>${profile.reportRate}%</strong><small>同业中位数 ${profile.peerMedianReportRate}%</small></div><div><span>复核维持率</span><strong>${profile.reviewUpholdRate}%</strong><small>${upholdRateGap >= 0 ? "高于" : "低于"}同业 ${Math.abs(upholdRateGap)}个百分点</small></div><div><span>KYC问题率</span><strong>${issueRate.toFixed(1)}%</strong><small>${gaps.map(([label]) => label).join("、")}偏弱</small></div><div><span>整改完成率</span><strong>${kyc.rectification}%</strong><small>${kyc.rectification < 75 ? "低于全辖目标" : "接近全辖目标"}</small></div></div>
+    <section class="institution-report-quality is-${reportQualityTone}"><span>上报口径诊断</span><strong>${escapeHtml(profile.reportQualityAssessment)}</strong></section>
+    <section class="institution-driver-list"><h3>主要变化原因</h3>${profile.reasons.map((reason, index) => `<div><i>${index + 1}</i><span>${escapeHtml(reason)}</span></div>`).join("")}</section>
+    <section class="institution-quality-bars"><h3>KYC质量画像</h3>${dimensions.map(([label, value]) => `<div><span>${label}</span><i><b style="width:${value}%"></b></i><strong>${value}</strong></div>`).join("")}</section>
+    <section class="institution-linkage"><span>${icon("link-2")}</span><div><strong>风险与KYC样本重合 ${insight.overlapRate}%</strong><small>${escapeHtml(insight.kycIssue)}</small></div></section>
+    <div class="institution-actions"><button class="button button-danger" data-open-risk-action="${primaryTheme.id}" data-risk-institution="${profile.id}" type="button">${icon("send")}形成风险提示</button><button class="button" data-open-risk-action="${profile.kycBriefingId}" data-risk-institution="${profile.id}" type="button">${icon("clipboard-check")}发起整改</button></div>
+  </aside>`;
+}
+
+function renderRiskClosure() {
+  const management = demo.riskManagement;
+  const { profile, insight, primaryTheme } = currentInstitutionDiagnostics();
+  const statusCounts = { draft: 0, sent: 0, received: 0, active: 0, complete: 0 };
+  Object.values(state.riskActionStatus).forEach((status) => {
+    if (status === "feedback") statusCounts.active += 1;
+    else if (status in statusCounts) statusCounts[status] += 1;
+  });
+  return `<section class="risk-closure-grid">
+    <article><div class="cell-title"><strong>新近异常方式</strong><span>新增、上升与结构变化</span></div><div class="emerging-patterns">${management.str.emergingPatterns.map((item) => `<div><span>${item.status}</span><strong>${item.label}</strong><small>${riskScaled(item.sample)}件 · +${item.change}%</small></div>`).join("")}</div></article>
+    <article class="selected-linked-insight"><div class="cell-title"><strong>风险与KYC联动洞察</strong><span>${escapeHtml(profile.label)}</span></div><div class="linkage-flow"><div><span>风险主题</span><strong>${escapeHtml(insight.riskTheme)}</strong></div>${icon("arrow-right")}<div><span>KYC缺口</span><strong>${escapeHtml(insight.kycIssue)}</strong></div></div><p>${escapeHtml(insight.explanation)}</p><button data-open-risk-action="${primaryTheme.id}" data-risk-institution="${profile.id}" data-risk-insight="${insight.id}" type="button">查看联动依据 ${icon("arrow-right")}</button></article>
+    <article class="closure-status-panel"><div class="cell-title"><strong>提示与整改闭环</strong><span>风险提示和业务反馈</span></div><div class="closure-status-counts"><div><strong>${statusCounts.draft}</strong><span>待发布</span></div><div><strong>${statusCounts.sent + statusCounts.received}</strong><span>已发送</span></div><div><strong>${statusCounts.active}</strong><span>整改中</span></div><div><strong>${statusCounts.complete}</strong><span>已完成</span></div></div><div class="latest-feedback"><span>${icon("message-square-text")}</span><div><strong>最近业务反馈</strong><small>${escapeHtml(profile.latestFeedback)}</small></div></div><button data-risk-view="action" type="button">进入提示与整改台 ${icon("arrow-right")}</button></article>
+  </section>`;
 }
 
 function renderRiskOverview() {
   const management = demo.riskManagement;
-  const summary = `<section class="risk-kpi-strip">${management.summary.map((item) => `<button class="risk-kpi ${item.tone}" type="button"><span>${icon(item.icon)}${item.label}</span><strong>${riskSummaryValue(item)}</strong><small class="${item.change < 0 ? "is-down" : "is-up"}">${item.change > 0 ? "+" : ""}${item.change}% · ${item.note}</small></button>`).join("")}</section>`;
+  const summary = `<section class="risk-kpi-strip">${management.summary.map((rawItem) => { const item = riskSummaryMeta(rawItem); return `<button class="risk-kpi ${item.tone}" type="button"><span>${icon(item.icon)}${item.label}</span><strong>${riskSummaryValue(item)}</strong><small class="${item.change < 0 ? "is-down" : "is-up"}">${riskSummaryChangeLabel(item)} · ${item.note}</small></button>`; }).join("")}</section>`;
   const strSeries = management.str.series.map((item) => ({ ...item, values: item.values.map((value) => riskScaled(value)) }));
   const strMax = Math.max(...strSeries.flatMap((item) => item.values), 1) * 1.15;
   const kycSeries = [
@@ -5791,21 +6026,14 @@ function renderRiskOverview() {
     { label: "整改完成率", color: "#1767b0", values: management.kyc.rectificationSeries },
   ];
   return `${riskFilterBar()}${summary}
-    <section class="risk-domain-stack">
-      <article class="risk-domain-panel str-domain"><header><div><span>STR RISK TREND</span><h2>STR风险趋势分析</h2><p>人工确认并上报结果，观察风险主题、机构和交易结构变化。</p></div><strong>${riskScaled(83)}<small>本期STR</small></strong></header><div class="risk-domain-grid">
-        <section class="risk-chart-cell"><div class="cell-title"><strong>十二期风险主题趋势</strong><span>点击数据点进入提示编制</span></div>${renderRiskLineChart(strSeries, { id: "strTrendChart", labels: management.months, maxValue: strMax })}</section>
-        <section class="risk-rank-cell"><div class="cell-title"><strong>高频风险类型</strong><span>数量 / 占比 / 环比</span></div><div class="risk-theme-ranking">${management.str.themes.map((item, index) => `<button data-open-risk-action="${item.id}" type="button"><i>${index + 1}</i><span><strong>${item.label}</strong><em><b style="width:${item.share}%"></b></em></span><small>${riskScaled(item.count)}件</small><b>+${item.change}%</b></button>`).join("")}</div></section>
-        <section class="risk-pattern-cell"><div class="cell-title"><strong>新近异常方式</strong><span>新增、上升与结构变化</span></div><div class="emerging-patterns">${management.str.emergingPatterns.map((item) => `<div><span>${item.status}</span><strong>${item.label}</strong><small>${riskScaled(item.sample)}件 · +${item.change}%</small></div>`).join("")}</div></section>
-        <section class="risk-heat-cell"><div class="cell-title"><strong>机构风险热力</strong><span>机构 × 风险主题</span></div>${renderRiskHeatmap(management.str.heatmap)}</section>
-      </div></article>
-      <article class="risk-domain-panel kyc-domain"><header><div><span>KYC DATA QUALITY</span><h2>KYC信息质量分析</h2><p>从正常预警与整改结果识别基础信息缺口及机构质量差异。</p></div><strong>18.7%<small>本期问题率</small></strong></header><div class="risk-domain-grid">
-        <section><div class="cell-title"><strong>问题原因分布</strong><span>按问题记录聚合</span></div>${renderRiskDonut(management.kyc.issueDistribution)}</section>
-        <section><div class="cell-title"><strong>待更新或缺失字段</strong><span>本期${riskScaled(216)}项待整改</span></div><div class="kyc-field-ranking">${management.kyc.fields.map((item) => `<div><span><strong>${item.label}</strong><small>${riskScaled(item.count)}项</small></span><i><b style="width:${item.rate * 3.2}%"></b></i><em>${item.rate}%</em></div>`).join("")}</div></section>
-        <section><div class="cell-title"><strong>机构质量对比</strong><span>完整、及时、一致与整改</span></div>${renderKycMatrix(management.kyc.institutions)}</section>
-        <section class="risk-chart-cell"><div class="cell-title"><strong>数据质量趋势</strong><span>问题率下降，整改率上升</span></div>${renderRiskLineChart(kycSeries, { id: "kycTrendChart", labels: management.months, maxValue: 100, percent: true })}</section>
-      </div></article>
+    <section class="risk-management-cockpit">
+      <div class="risk-management-main">
+        <article class="risk-trend-panel"><header><div><span>STR RISK TREND</span><h2>风险趋势与高频主题</h2><p>基于人工确认并上报结果，观察风险主题和交易结构变化。</p></div><strong>${riskScaled(83)}<small>本期STR</small></strong></header><div class="risk-trend-content"><section class="risk-chart-cell"><div class="cell-title"><strong>十二期风险主题趋势</strong><span>点击数据点进入提示编制</span></div>${renderRiskLineChart(strSeries, { id: "strTrendChart", labels: management.months, maxValue: strMax })}</section><section class="risk-rank-cell"><div class="cell-title"><strong>高频风险类型</strong><span>数量 / 环比</span></div><div class="risk-theme-ranking">${management.str.themes.map((item, index) => `<button data-open-risk-action="${item.id}" type="button"><i>${index + 1}</i><span><strong>${item.label}</strong><em><b style="width:${item.share}%"></b></em></span><small>${riskScaled(item.count)}件</small><b>+${item.change}%</b></button>`).join("")}</div></section></div></article>
+        <article class="risk-detail-panel"><section class="risk-heat-cell"><div class="cell-title"><strong>机构风险热力</strong><span>点击选择当前关注机构</span></div>${renderRiskHeatmap(management.str.heatmap)}</section><section><div class="cell-title"><strong>KYC问题原因</strong><span>按问题记录聚合</span></div>${renderRiskDonut(management.kyc.issueDistribution)}</section><section><div class="cell-title"><strong>待更新或缺失字段</strong><span>${riskScaled(216)}项待整改</span></div><div class="kyc-field-ranking">${management.kyc.fields.map((item) => `<div><span><strong>${item.label}</strong><small>${riskScaled(item.count)}项</small></span><i><b style="width:${item.rate * 3.2}%"></b></i><em>${item.rate}%</em></div>`).join("")}</div></section><section class="risk-chart-cell compact-trend"><div class="cell-title"><strong>数据质量趋势</strong><span>问题率下降，整改率上升</span></div>${renderRiskLineChart(kycSeries, { id: "kycTrendChart", labels: management.months, maxValue: 100, percent: true })}</section></article>
+      </div>
+      ${renderCurrentInstitutionDiagnosis()}
     </section>
-    <section class="linked-insights"><header><div><span>CROSS-DOMAIN INSIGHT</span><h2>风险与KYC联动洞察</h2></div><p>统计关联不代表因果关系，点击后可形成面向业务部门的提示与整改任务。</p></header><div>${management.insights.map((item) => `<button data-risk-insight="${item.id}" data-open-risk-action="${item.themeId}" data-risk-institution="${item.institutionId}" type="button"><span class="insight-change">+${item.change}%</span><div><strong>${item.riskTheme}</strong><small>${item.institution} · ${item.department} · ${riskScaled(item.sampleCount)}件样本</small></div><i>${icon("link-2")}</i><div><strong>${item.kycIssue}</strong><small>${item.overlapRate}%样本同时出现</small></div><p>${item.explanation}</p><em>${icon("arrow-right")}形成提示</em></button>`).join("")}</div></section>`;
+    ${renderRiskClosure()}`;
 }
 
 function riskActionLabel(status) {
@@ -5876,6 +6104,12 @@ function bindRiskManagementEvents() {
   $$('[data-risk-institution-only]').forEach((button) => button.addEventListener("click", () => {
     state.riskFilters.institution = button.dataset.riskInstitutionOnly;
     state.selectedInstitutionId = button.dataset.riskInstitutionOnly;
+    renderRiskBriefings();
+  }));
+  $$('[data-risk-heat-cell]').forEach((button) => button.addEventListener("click", () => {
+    state.riskFilters.institution = button.dataset.riskInstitution;
+    state.selectedInstitutionId = button.dataset.riskInstitution;
+    state.selectedBriefingId = button.dataset.riskTheme;
     renderRiskBriefings();
   }));
   $$('[data-risk-type]').forEach((button) => button.addEventListener("click", () => {
