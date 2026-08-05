@@ -3026,6 +3026,56 @@ window.BRAINS_DEMO = {
     return true;
   }
 
+  function normalizeBootstrapData(remoteData = {}, fallbackData = {}) {
+    const remote = remoteData && typeof remoteData === "object" ? remoteData : {};
+    const fallback = fallbackData && typeof fallbackData === "object" ? fallbackData : {};
+    const remoteKnowledge = remote.knowledge && typeof remote.knowledge === "object"
+      ? remote.knowledge
+      : {};
+    const fallbackKnowledge = fallback.knowledge && typeof fallback.knowledge === "object"
+      ? fallback.knowledge
+      : {};
+    const regulatoryDefaults = {
+      event_count: 0,
+      source_record_count: 0,
+      latest_penalty_date: "-",
+      duty_count: 0,
+      source_name: "监管处罚事件",
+    };
+
+    return {
+      ...fallback,
+      ...remote,
+      cases: Array.isArray(remote.cases) && remote.cases.length
+        ? remote.cases
+        : (Array.isArray(fallback.cases) ? fallback.cases : []),
+      staff: Array.isArray(remote.staff) && remote.staff.length
+        ? remote.staff
+        : (Array.isArray(fallback.staff) ? fallback.staff : []),
+      options: {
+        ...(fallback.options || {}),
+        ...(remote.options || {}),
+      },
+      model: {
+        ...(fallback.model || {}),
+        ...(remote.model || {}),
+      },
+      knowledge: {
+        ...fallbackKnowledge,
+        ...remoteKnowledge,
+        task_labels: {
+          ...(fallbackKnowledge.task_labels || {}),
+          ...(remoteKnowledge.task_labels || {}),
+        },
+        regulatory: {
+          ...regulatoryDefaults,
+          ...(fallbackKnowledge.regulatory || {}),
+          ...(remoteKnowledge.regulatory || {}),
+        },
+      },
+    };
+  }
+
   function riskFilterScale(filters = {}) {
     const institution = {
       all: 1,
@@ -3413,6 +3463,7 @@ window.BRAINS_DEMO = {
     escapeHtml,
     fetchWithTimeout,
     shouldUsePortableFallback,
+    normalizeBootstrapData,
     riskFilterScale,
     resolveRiskSelection,
     advanceRiskActionStatus,
@@ -4733,12 +4784,14 @@ function renderAssistantAnalysis() {
   const meta = getMeta();
   const result = state.assistantResults[item.id];
   const knowledge = state.bootstrap.knowledge;
+  const regulatoryStats = knowledge.regulatory || {};
+  const regulatoryCount = Number(regulatoryStats.event_count) || 0;
   const historyItems = result?.retrieval?.items || [];
   const regulatoryItems = result?.regulatory_retrieval?.items || [];
   return `
     <section class="rag-pipeline">
       ${ragStep("scan-search", "01", "案件上下文", "画像与证据锚点", true)}
-      ${ragStep("orbit", "02", "双库向量召回", `案例${knowledge.case_count}件 · 监管${knowledge.regulatory.event_count}件`, Boolean(result))}
+      ${ragStep("orbit", "02", "双库向量召回", `案例${knowledge.case_count}件 · 监管${regulatoryCount}件`, Boolean(result))}
       ${ragStep("list-filter", "03", "分路混合精排", "案件相似度·监管义务", Boolean(result))}
       ${ragStep("brain-circuit", "04", "大模型汇总", "结论带引用输出", Boolean(result))}
     </section>
@@ -4764,8 +4817,8 @@ function renderAssistantAnalysis() {
         ${result ? renderAssistantAnswer(result) + renderAssistantConversation(result) : `<div class="assistant-empty">${icon("library-big")}<h2>等待发起知识增强研判</h2><p>系统分别从历史案例库和监管处罚库召回相关知识，再与当前证据及任务Prompt共同交给通用大模型。</p><div><span>历史案例对照处置经验</span><span>监管事件核对合规义务</span></div></div>`}
       </section>
       <aside class="retrieval-panel">
-        <header class="pane-title"><div><strong>双知识库召回</strong><span>${result ? `${historyItems.length + regulatoryItems.length}条知识进入上下文` : `共${knowledge.case_count + knowledge.regulatory.event_count}条可检索知识`}</span></div>${result ? `<span class="status-pill status-teal">Embedding精排</span>` : ""}</header>
-        ${result ? `<div class="dual-retrieval"><section><header><strong>历史相似案例</strong><span>Top-${historyItems.length}</span></header>${renderRetrievedCases(result)}</section><section><header><strong>相关监管处罚</strong><span>Top-${regulatoryItems.length}</span></header>${renderRetrievedRegulatoryEvents(result)}</section></div>` : `<div class="retrieval-placeholder">${icon("database-zap")}<strong>双库分路检索</strong><p>${knowledge.case_count}件历史案例 · ${knowledge.regulatory.event_count}件监管处罚</p><small>历史案例用于对照处置经验，监管事件用于核对相关合规义务。</small></div>`}
+        <header class="pane-title"><div><strong>双知识库召回</strong><span>${result ? `${historyItems.length + regulatoryItems.length}条知识进入上下文` : `共${knowledge.case_count + regulatoryCount}条可检索知识`}</span></div>${result ? `<span class="status-pill status-teal">Embedding精排</span>` : ""}</header>
+        ${result ? `<div class="dual-retrieval"><section><header><strong>历史相似案例</strong><span>Top-${historyItems.length}</span></header>${renderRetrievedCases(result)}</section><section><header><strong>相关监管处罚</strong><span>Top-${regulatoryItems.length}</span></header>${renderRetrievedRegulatoryEvents(result)}</section></div>` : `<div class="retrieval-placeholder">${icon("database-zap")}<strong>双库分路检索</strong><p>${knowledge.case_count}件历史案例 · ${regulatoryCount}件监管处罚</p><small>历史案例用于对照处置经验，监管事件用于核对相关合规义务。</small></div>`}
       </aside>
     </section>`;
 }
@@ -5090,7 +5143,12 @@ async function loadKnowledgeCases() {
 }
 
 function renderRegulatoryLibrary() {
-  const stats = state.bootstrap.knowledge.regulatory;
+  const stats = state.bootstrap.knowledge.regulatory || {
+    event_count: 0,
+    source_record_count: 0,
+    latest_penalty_date: "-",
+    duty_count: 0,
+  };
   if (!state.regulatoryEvents) {
     return `<div class="knowledge-loading">${icon("loader-circle", "spin")}<strong>${state.regulatoryLoading ? "正在载入监管处罚事件" : "准备载入监管处罚知识库"}</strong><p>演示库由原始风险事件库自动筛选生成，每条均保留监管公示链接。</p></div>`;
   }
@@ -6037,7 +6095,10 @@ async function init() {
   try {
     const response = await apiFetch("/api/bootstrap");
     if (!response.ok) throw new Error("初始化接口不可用");
-    state.bootstrap = await response.json();
+    state.bootstrap = uiLogic.normalizeBootstrapData(
+      await response.json(),
+      portableData?.bootstrap,
+    );
     if (!state.bootstrap.cases.some((item) => item.id === state.currentCaseId)) {
       setCurrentCase(state.bootstrap.cases[0].id);
     }
