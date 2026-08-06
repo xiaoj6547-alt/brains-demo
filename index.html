@@ -1483,26 +1483,39 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .emerging-patterns strong { font-size: 9px; }
 .emerging-patterns small { color: #788d9d; font-size: 8px; }
 .risk-heatmap, .kyc-matrix { display: grid; grid-template-columns: 82px repeat(var(--heat-columns, 4), minmax(38px, 1fr)); gap: 4px; align-items: stretch; }
-.risk-heatmap > strong, .kyc-matrix > strong { display: grid; place-items: end center; min-height: 30px; color: #6d8292; font-size: 7px; text-align: center; }
+.risk-heatmap > strong, .kyc-matrix > strong { display: grid; place-items: end center; min-height: 42px; padding: 0 3px 5px; color: #607b8e; font-size: 8px; line-height: 1.35; text-align: center; }
 .risk-heatmap > b, .kyc-matrix > b, .heat-row-label { display: flex; align-items: center; color: #3d5a70; font-size: 8px; }
 .heat-row-label { min-width: 0; padding: 0 4px; background: transparent; border: 0; text-align: left; }
 .risk-heatmap > b.is-selected, .kyc-matrix > b.is-selected, .heat-row-label.is-selected { color: var(--blue-700); font-weight: 800; }
-.risk-heatmap button, .kyc-matrix button { min-height: 36px; color: #fff; border: 1px solid rgba(255, 255, 255, .7); font: 800 9px "DIN Alternate", Arial, sans-serif; }
+.risk-heatmap button, .kyc-matrix button { min-height: 40px; color: #fff; border: 1px solid rgba(255, 255, 255, .7); font: 800 10px "DIN Alternate", Arial, sans-serif; }
 .heat-1, .matrix-1 { background: #dceaf1; color: #35566c !important; }
 .heat-2, .matrix-2 { background: #9fc7d8; }
 .heat-3, .matrix-3 { background: #4d94b5; }
 .heat-4, .matrix-4 { background: #1767a0; }
 .heat-5, .matrix-5 { background: #b52b38; }
 .risk-heatmap button:not(.heat-row-label):hover, .kyc-matrix button:not(.heat-row-label):hover, .risk-heatmap button.is-selected, .kyc-matrix button.is-selected { box-shadow: inset 0 0 0 2px #fff, 0 0 0 2px var(--gold-600); }
-.kyc-donut { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 10px; align-items: center; }
-.kyc-donut svg { width: 140px; height: 140px; transform: rotate(-90deg); }
+.risk-heatmap-shell, .kyc-diagnostic-shell { min-height: 0; flex: 1; display: flex; flex-direction: column; }
+.risk-heatmap-shell .risk-heatmap { margin: auto 0; }
+.heat-scale { display: flex; align-items: center; justify-content: flex-end; gap: 3px; margin: 10px 0 7px; color: #6d8494; font-size: 7px; }
+.heat-scale i { width: 18px; height: 7px; display: block; }
+.diagnostic-footnote { min-height: 40px; margin: auto -13px -13px; padding: 9px 13px; color: #60798b; background: #f3f7f9; border-top: 1px solid var(--line); font-size: 8px; line-height: 1.55; }
+.diagnostic-footnote.is-kyc { border-left: 3px solid var(--teal-600); }
+.kyc-donut { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 10px; align-items: center; margin: auto 0; }
+.kyc-donut svg { width: 100px; height: 100px; transform: rotate(-90deg); }
 .kyc-donut svg text { fill: #28485f; font: 800 15px "DIN Alternate", Arial, sans-serif; transform: rotate(90deg); transform-origin: 70px 70px; }
 .kyc-donut svg text:last-child { font-size: 8px; }
-.kyc-donut > div { display: grid; gap: 7px; }
-.kyc-donut > div span { display: grid; grid-template-columns: 7px 1fr auto; gap: 6px; align-items: center; }
-.kyc-donut > div i { width: 7px; height: 7px; border-radius: 50%; }
-.kyc-donut > div b { color: #466379; font-size: 8px; }
-.kyc-donut > div small { color: #728899; font-size: 8px; }
+.kyc-issue-list { min-width: 0; display: grid; }
+.kyc-issue-head, .kyc-issue-row { min-width: 0; display: grid; grid-template-columns: minmax(78px, 1fr) 34px 32px 42px; gap: 6px; align-items: center; }
+.kyc-issue-head { min-height: 26px; color: #8396a4; border-bottom: 1px solid var(--line); font-size: 7px; text-align: right; }
+.kyc-issue-head span:first-child { text-align: left; }
+.kyc-issue-row { min-height: 30px; border-bottom: 1px solid #e8eef2; }
+.kyc-issue-row:last-child { border-bottom: 0; }
+.kyc-issue-row > span { min-width: 0; display: grid; grid-template-columns: 7px minmax(0, 1fr); gap: 6px; align-items: center; }
+.kyc-issue-row i { width: 7px; height: 7px; border-radius: 50%; }
+.kyc-issue-row b { overflow: hidden; color: #3d5d74; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.kyc-issue-row strong, .kyc-issue-row small, .kyc-issue-row em { color: #647d8f; font-size: 8px; font-style: normal; text-align: right; }
+.kyc-issue-row em.is-up { color: var(--red-700); }
+.kyc-issue-row em.is-down { color: var(--teal-700); }
 .kyc-field-ranking { display: grid; gap: 9px; }
 .kyc-field-ranking > div { display: grid; grid-template-columns: minmax(0, 1fr) 36px; gap: 4px 8px; align-items: center; }
 .kyc-field-ranking span { display: flex; justify-content: space-between; gap: 8px; }
@@ -1528,10 +1541,11 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .risk-trend-content .risk-line-chart { max-height: 205px; }
 .risk-detail-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .risk-detail-panel > section { min-width: 0; min-height: 218px; padding: 13px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.risk-detail-panel > .risk-diagnostic-cell { min-height: 292px; display: flex; flex-direction: column; }
 .risk-detail-panel > section:nth-child(2n) { border-right: 0; }
 .risk-detail-panel > section:nth-last-child(-n+2) { border-bottom: 0; }
-.risk-detail-panel .kyc-donut { grid-template-columns: 112px minmax(0, 1fr); }
-.risk-detail-panel .kyc-donut svg { width: 112px; height: 112px; }
+.risk-detail-panel .kyc-donut { grid-template-columns: 100px minmax(0, 1fr); }
+.risk-detail-panel .kyc-donut svg { width: 100px; height: 100px; }
 .risk-detail-panel .compact-trend .risk-line-chart { max-height: 150px; }
 .risk-detail-panel .compact-trend .risk-chart-legend { margin-top: 0; }
 .current-institution-panel { align-self: stretch; display: flex; flex-direction: column; }
@@ -1584,9 +1598,9 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .institution-linkage small { margin-top: 3px; color: #b8cad7; font-size: 7px; line-height: 1.4; }
 .institution-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding: 12px 14px 14px; }
 .institution-actions .button { min-width: 0; justify-content: center; padding-inline: 8px; font-size: 8px; }
-.risk-closure-grid { display: grid; grid-template-columns: .85fr 1.2fr 1fr; gap: 12px; margin-top: 12px; }
+.risk-closure-grid { display: grid; grid-template-columns: .72fr 1.55fr .85fr; gap: 12px; align-items: start; margin-top: 12px; }
 .risk-closure-grid > article { min-height: 220px; padding: 13px; }
-.selected-linked-insight { display: flex; flex-direction: column; }
+.selected-linked-insight { display: block; }
 .linkage-flow { display: grid; grid-template-columns: minmax(0, 1fr) 26px minmax(0, 1fr); gap: 8px; align-items: center; padding: 12px; background: #f3f7f9; }
 .linkage-flow > svg { width: 17px; height: 17px; color: var(--gold-600); }
 .linkage-flow span, .linkage-flow strong { display: block; }
@@ -1595,6 +1609,22 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .selected-linked-insight > p { margin: 12px 0; color: #60798c; font-size: 8px; line-height: 1.6; }
 .selected-linked-insight > button, .closure-status-panel > button { width: fit-content; display: inline-flex; align-items: center; gap: 5px; margin-top: auto; padding: 0; color: var(--blue-700); background: transparent; border: 0; font-size: 8px; font-weight: 750; }
 .selected-linked-insight > button svg, .closure-status-panel > button svg { width: 12px; height: 12px; }
+.linked-insight-list { display: grid; gap: 8px; }
+.linked-insight-list > button { min-width: 0; display: grid; gap: 7px; padding: 10px 11px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-left: 3px solid var(--gold-600); text-align: left; }
+.linked-insight-list > button:hover, .linked-insight-list > button:focus-visible { background: #f5f9fb; border-color: #9bb8ca; outline: none; }
+.linked-insight-head { min-width: 0; display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.linked-insight-head > i { width: 22px; height: 22px; display: grid; place-items: center; color: #fff; background: var(--navy-800); font: 750 8px "DIN Alternate", Arial, sans-serif; font-style: normal; }
+.linked-insight-head span, .linked-insight-head strong { display: block; }
+.linked-insight-head span, .linked-insight-issue span { color: #7b909f; font-size: 7px; }
+.linked-insight-head strong { margin-top: 2px; color: #28475e; font-size: 9px; line-height: 1.35; }
+.linked-insight-head em { padding: 3px 5px; color: var(--red-700); background: #fff0f1; font-size: 8px; font-style: normal; font-weight: 750; white-space: nowrap; }
+.linked-insight-issue { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 7px; align-items: baseline; padding: 6px 8px; background: #f2f6f8; }
+.linked-insight-issue strong { color: #304f65; font-size: 8px; line-height: 1.4; }
+.linked-insight-metrics { display: flex; flex-wrap: wrap; gap: 5px 12px; color: #758b9b; font-size: 7px; }
+.linked-insight-metrics b { color: #36566d; font-size: 8px; }
+.linked-insight-list p { margin: 0; color: #5a7487; font-size: 8px; line-height: 1.55; }
+.linked-insight-list footer { display: flex; align-items: center; justify-content: flex-end; gap: 4px; color: var(--blue-700); font-size: 8px; font-weight: 750; }
+.linked-insight-list footer svg { width: 12px; height: 12px; }
 .closure-status-counts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); }
 .closure-status-counts > div { padding: 9px 5px; border-right: 1px solid var(--line); text-align: center; }
 .closure-status-counts > div:last-child { border-right: 0; }
@@ -1869,8 +1899,15 @@ svg { width: 18px; height: 18px; stroke-width: 1.8; }
   .institution-actions { grid-template-columns: 1fr; }
   .risk-trend-panel > header { align-items: flex-start; }
   .risk-trend-content > section, .risk-detail-panel > section, .risk-closure-grid > article { min-height: 0; }
-  .risk-detail-panel .kyc-donut { grid-template-columns: 104px minmax(0, 1fr); }
-  .risk-detail-panel .kyc-donut svg { width: 104px; height: 104px; }
+  .risk-detail-panel .kyc-donut { grid-template-columns: 1fr; gap: 8px; }
+  .risk-detail-panel .kyc-donut svg { width: 104px; height: 104px; margin: 0 auto; }
+  .risk-detail-panel > .risk-diagnostic-cell { min-height: 0; }
+  .risk-heatmap > strong { min-height: 60px; padding-inline: 1px; font-size: 7px; }
+  .diagnostic-footnote { margin-top: 10px; }
+  .kyc-issue-head, .kyc-issue-row { grid-template-columns: minmax(94px, 1fr) 36px 34px 44px; }
+  .linked-insight-head { grid-template-columns: 24px minmax(0, 1fr); }
+  .linked-insight-head em { grid-column: 2; width: fit-content; }
+  .linked-insight-issue { grid-template-columns: 52px minmax(0, 1fr); }
   .risk-domain-panel > header { align-items: flex-start; }
   .risk-domain-grid { grid-template-columns: 1fr; }
   .risk-domain-grid > section, .risk-domain-grid > section:nth-child(2n), .risk-domain-grid > section:nth-last-child(-n+2) { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
@@ -3045,7 +3082,7 @@ window.BRAINS_DEMO = {
         { label: "跑分账户向新开户迁移", status: "结构变化", change: 23, sample: 19 },
       ],
       heatmap: {
-        columns: ["归集快转", "跑分迁移", "跨境回流", "夜间拆分"],
+        columns: ["企业账户归集快转", "涉诈跑分账户迁移", "跨境贸易分层回流", "夜间高频拆分交易"],
         rows: [
           { id: "beijing", label: "北京分行", values: [72, 91, 38, 56] },
           { id: "shanghai", label: "上海分行", values: [64, 42, 94, 48] },
@@ -3056,11 +3093,11 @@ window.BRAINS_DEMO = {
     },
     kyc: {
       issueDistribution: [
-        { label: "信息缺失", value: 31, color: "#0b8b7d" },
-        { label: "信息过期", value: 24, color: "#2378a8" },
-        { label: "内外不一致", value: 21, color: "#c59034" },
-        { label: "更新不及时", value: 16, color: "#657f93" },
-        { label: "材料冲突", value: 8, color: "#c62f3c" },
+        { label: "关键信息缺失", count: 67, value: 31, change: -6.8, color: "#0b8b7d" },
+        { label: "客户信息过期", count: 52, value: 24, change: -3.4, color: "#2378a8" },
+        { label: "内外部信息不一致", count: 45, value: 21, change: 2.2, color: "#c59034" },
+        { label: "信息更新不及时", count: 35, value: 16, change: -4.6, color: "#657f93" },
+        { label: "佐证材料相互冲突", count: 17, value: 8, change: 1.4, color: "#c62f3c" },
       ],
       fields: [
         { label: "经营范围", count: 67, rate: 24.1 },
@@ -3086,16 +3123,70 @@ window.BRAINS_DEMO = {
         explanation: "高风险样本中，经营信息未及时更新与资金用途解释不足同时出现，需联合核实真实经营和交易背景。",
       },
       {
+        id: "RI-08", themeId: "RB-STR-03", institutionId: "guangdong",
+        riskTheme: "涉诈跑分账户向新开户迁移", kycIssue: "职业收入与账户用途不一致",
+        sampleCount: 15, overlapRate: 57, change: 23, institution: "广东分行", department: "个人金融部",
+        explanation: "新开户账户的交易强度明显超过客户职业收入水平，且多个账户出现设备复用，应核验实际控制人与开户用途。",
+      },
+      {
+        id: "RI-09", themeId: "RB-STR-04", institutionId: "guangdong",
+        riskTheme: "夜间高频拆分后固定转出", kycIssue: "交易目的缺失或长期未更新",
+        sampleCount: 11, overlapRate: 49, change: 17, institution: "广东分行", department: "渠道管理部",
+        explanation: "夜间拆分样本频繁流向固定对手，但客户交易目的字段缺失，难以解释资金流向与日常经营的对应关系。",
+      },
+      {
         id: "RI-02", themeId: "RB-STR-02", institutionId: "shanghai",
         riskTheme: "跨境贸易资金分层回流", kycIssue: "受益所有人及境外关联方信息缺失",
         sampleCount: 16, overlapRate: 56, change: 31, institution: "上海分行", department: "国际业务部",
         explanation: "跨境回流样本的境外关联方与受益所有人信息完整度偏低，影响贸易真实性和资金最终去向核验。",
       },
       {
+        id: "RI-06", themeId: "RB-STR-02", institutionId: "shanghai",
+        riskTheme: "出口退款形成阶段性跨境回流", kycIssue: "境外交易对手与合同单据缺失",
+        sampleCount: 13, overlapRate: 58, change: 27, institution: "上海分行", department: "国际业务部",
+        explanation: "退款路径与原贸易结算链路不一致，部分样本缺少境外交易对手说明和原始合同，需核验退款背景与货物流。",
+      },
+      {
+        id: "RI-07", themeId: "RB-STR-01", institutionId: "shanghai",
+        riskTheme: "多层中间账户归集后出境", kycIssue: "受益所有人信息已过期",
+        sampleCount: 10, overlapRate: 52, change: 21, institution: "上海分行", department: "公司金融部",
+        explanation: "中间账户归集路径增多，但受益所有人信息未随股权变化更新，难以确认资金最终控制关系。",
+      },
+      {
         id: "RI-03", themeId: "RB-STR-03", institutionId: "beijing",
         riskTheme: "涉诈跑分账户群快速迁移", kycIssue: "职业收入与账户用途不一致",
         sampleCount: 19, overlapRate: 68, change: 23, institution: "北京分行", department: "个人金融部",
         explanation: "账户使用强度与客户职业收入明显不匹配，且设备复用集中，应重点识别账户实际控制关系。",
+      },
+      {
+        id: "RI-04", themeId: "RB-STR-03", institutionId: "beijing",
+        riskTheme: "新开户账户集中复用交易设备", kycIssue: "联系方式与居住地址更新滞后",
+        sampleCount: 14, overlapRate: 63, change: 19, institution: "北京分行", department: "个人金融部",
+        explanation: "新开户账户共享设备和IP地址，但联系方式及居住地址长期未更新，需核实开户资料和账户实际使用人。",
+      },
+      {
+        id: "RI-05", themeId: "RB-STR-04", institutionId: "beijing",
+        riskTheme: "夜间拆分转账后异地取现", kycIssue: "交易目的与资金用途缺失",
+        sampleCount: 9, overlapRate: 47, change: 12, institution: "北京分行", department: "渠道管理部",
+        explanation: "夜间资金拆分后在异地快速取现，但客户档案未记录相应交易目的和资金用途，需补充场景佐证。",
+      },
+      {
+        id: "RI-10", themeId: "RB-STR-04", institutionId: "jiangsu",
+        riskTheme: "夜间高频拆分交易", kycIssue: "交易目的与资金用途缺失",
+        sampleCount: 11, overlapRate: 64, change: 17, institution: "江苏分行", department: "渠道管理部",
+        explanation: "夜间拆分交易连续增加，相关客户缺少交易目的和资金用途说明，应优先补充业务背景与对手方证明。",
+      },
+      {
+        id: "RI-11", themeId: "RB-STR-01", institutionId: "jiangsu",
+        riskTheme: "企业账户归集后异地取现", kycIssue: "主要交易对手信息缺失",
+        sampleCount: 8, overlapRate: 45, change: 14, institution: "江苏分行", department: "公司金融部",
+        explanation: "企业账户资金归集后转为异地现金支取，但客户档案未完整记录主要交易对手，需核实业务往来真实性。",
+      },
+      {
+        id: "RI-12", themeId: "RB-STR-03", institutionId: "jiangsu",
+        riskTheme: "个人账户多头收款后快速转出", kycIssue: "职业与收入信息已过期",
+        sampleCount: 7, overlapRate: 43, change: 11, institution: "江苏分行", department: "个人金融部",
+        explanation: "个人账户收款来源快速扩张，但职业和收入信息未同步更新，账户使用强度与客户背景难以匹配。",
       },
     ],
   },
@@ -5943,7 +6034,7 @@ function heatTone(value) {
 function renderRiskHeatmap(heatmap) {
   const themeIds = demo.riskManagement.str.themes.map((item) => item.id);
   const selectedInstitution = currentRiskInstitutionId();
-  return `<div class="risk-heatmap" style="--heat-columns:${heatmap.columns.length}"><span></span>${heatmap.columns.map((column) => `<strong>${escapeHtml(column)}</strong>`).join("")}${heatmap.rows.map((row) => `<button class="heat-row-label ${selectedInstitution === row.id ? "is-selected" : ""}" data-risk-institution-only="${row.id}" type="button">${escapeHtml(row.label)}</button>${row.values.map((value, index) => `<button class="heat-${heatTone(value)} ${selectedInstitution === row.id && state.selectedBriefingId === themeIds[index] ? "is-selected" : ""}" data-risk-heat-cell data-risk-theme="${themeIds[index]}" data-risk-institution="${row.id}" type="button" title="选择${escapeHtml(row.label)} · ${escapeHtml(heatmap.columns[index])}：${value}">${value}</button>`).join("")}`).join("")}</div>`;
+  return `<div class="risk-heatmap-shell"><div class="risk-heatmap" style="--heat-columns:${heatmap.columns.length}"><span></span>${heatmap.columns.map((column) => `<strong>${escapeHtml(column)}</strong>`).join("")}${heatmap.rows.map((row) => `<button class="heat-row-label ${selectedInstitution === row.id ? "is-selected" : ""}" data-risk-institution-only="${row.id}" type="button">${escapeHtml(row.label)}</button>${row.values.map((value, index) => `<button class="heat-${heatTone(value)} ${selectedInstitution === row.id && state.selectedBriefingId === themeIds[index] ? "is-selected" : ""}" data-risk-heat-cell data-risk-theme="${themeIds[index]}" data-risk-institution="${row.id}" type="button" title="选择${escapeHtml(row.label)} · ${escapeHtml(heatmap.columns[index])}：集中度${value}">${value}</button>`).join("")}`).join("")}</div><div class="heat-scale" aria-label="集中度色阶"><span>集中度低</span>${[1, 2, 3, 4, 5].map((tone) => `<i class="heat-${tone}"></i>`).join("")}<span>集中度高</span></div><p class="diagnostic-footnote">统计口径：按已确认并上报的可疑样本聚合。数值越高，表示该风险主题在对应机构的样本中越集中。</p></div>`;
 }
 
 function renderRiskDonut(items) {
@@ -5953,7 +6044,8 @@ function renderRiskDonut(items) {
     offset += item.value;
     return segment;
   }).join("");
-  return `<div class="kyc-donut"><svg viewBox="0 0 140 140" role="img" aria-label="KYC问题原因分布"><circle cx="70" cy="70" r="48" fill="none" stroke="#e7edf1" stroke-width="18"/>${segments}<text x="70" y="66" text-anchor="middle">18.7%</text><text x="70" y="84" text-anchor="middle">问题率</text></svg><div>${items.map((item) => `<span><i style="background:${item.color}"></i><b>${item.label}</b><small>${item.value}%</small></span>`).join("")}</div></div>`;
+  const leadingShare = items.slice(0, 2).reduce((sum, item) => sum + item.value, 0);
+  return `<div class="kyc-diagnostic-shell"><div class="kyc-donut"><svg viewBox="0 0 140 140" role="img" aria-label="本期KYC信息质量问题构成"><circle cx="70" cy="70" r="48" fill="none" stroke="#e7edf1" stroke-width="18"/>${segments}<text x="70" y="66" text-anchor="middle">18.7%</text><text x="70" y="84" text-anchor="middle">问题率</text></svg><div class="kyc-issue-list"><div class="kyc-issue-head"><span>问题类型</span><span>记录</span><span>占比</span><span>较上期</span></div>${items.map((item) => `<div class="kyc-issue-row"><span><i style="background:${item.color}"></i><b>${escapeHtml(item.label)}</b></span><strong>${riskScaled(item.count)}项</strong><small>${item.value}%</small><em class="${item.change > 0 ? "is-up" : "is-down"}">${item.change > 0 ? "+" : ""}${item.change}%</em></div>`).join("")}</div></div><p class="diagnostic-footnote is-kyc">管理结论：关键信息缺失与客户信息过期合计${leadingShare}%，重点集中于经营范围、受益所有人和主要交易对手字段。</p></div>`;
 }
 
 function renderKycMatrix(items) {
@@ -5979,11 +6071,12 @@ function currentInstitutionDiagnostics() {
     ["整改率", kyc.rectification],
   ];
   const gaps = dimensions.slice(0, 3).sort((a, b) => a[1] - b[1]).slice(0, 2);
-  const insight = management.insights.find((item) => item.institutionId === profile.id) || management.insights[0];
+  const insights = management.insights.filter((item) => item.institutionId === profile.id);
+  const insight = insights.find((item) => item.themeId === primaryTheme.id) || insights[0] || management.insights[0];
   const reportRateGap = Number((profile.reportRate - profile.peerMedianReportRate).toFixed(1));
   const upholdRateGap = Number((profile.reviewUpholdRate - profile.peerMedianUpholdRate).toFixed(1));
   const reportQualityTone = reportRateGap >= 8 && upholdRateGap <= -8 ? "alert" : reportRateGap > 0 && upholdRateGap > 0 ? "strong" : "steady";
-  return { profile, heatRow, kyc, primaryTheme, themeScore, issueRate, dimensions, gaps, insight, reportRateGap, upholdRateGap, reportQualityTone };
+  return { profile, heatRow, kyc, primaryTheme, themeScore, issueRate, dimensions, gaps, insight, insights, reportRateGap, upholdRateGap, reportQualityTone };
 }
 
 function renderCurrentInstitutionDiagnosis() {
@@ -6003,7 +6096,8 @@ function renderCurrentInstitutionDiagnosis() {
 
 function renderRiskClosure() {
   const management = demo.riskManagement;
-  const { profile, insight, primaryTheme } = currentInstitutionDiagnostics();
+  const { profile, insight, insights } = currentInstitutionDiagnostics();
+  const institutionInsights = insights.length ? insights : [insight];
   const statusCounts = { draft: 0, sent: 0, received: 0, active: 0, complete: 0 };
   Object.values(state.riskActionStatus).forEach((status) => {
     if (status === "feedback") statusCounts.active += 1;
@@ -6011,7 +6105,7 @@ function renderRiskClosure() {
   });
   return `<section class="risk-closure-grid">
     <article><div class="cell-title"><strong>新近异常方式</strong><span>新增、上升与结构变化</span></div><div class="emerging-patterns">${management.str.emergingPatterns.map((item) => `<div><span>${item.status}</span><strong>${item.label}</strong><small>${riskScaled(item.sample)}件 · +${item.change}%</small></div>`).join("")}</div></article>
-    <article class="selected-linked-insight"><div class="cell-title"><strong>风险与KYC联动洞察</strong><span>${escapeHtml(profile.label)}</span></div><div class="linkage-flow"><div><span>风险主题</span><strong>${escapeHtml(insight.riskTheme)}</strong></div>${icon("arrow-right")}<div><span>KYC缺口</span><strong>${escapeHtml(insight.kycIssue)}</strong></div></div><p>${escapeHtml(insight.explanation)}</p><button data-open-risk-action="${primaryTheme.id}" data-risk-institution="${profile.id}" data-risk-insight="${insight.id}" type="button">查看联动依据 ${icon("arrow-right")}</button></article>
+    <article class="selected-linked-insight"><div class="cell-title"><strong>风险与KYC联动诊断</strong><span>${escapeHtml(profile.label)} · 3项高相关发现</span></div><div class="linked-insight-list">${institutionInsights.slice(0, 3).map((item, index) => `<button data-open-risk-action="${item.themeId}" data-risk-institution="${profile.id}" data-risk-insight="${item.id}" type="button"><div class="linked-insight-head"><i>${String(index + 1).padStart(2, "0")}</i><div><span>风险主题</span><strong>${escapeHtml(item.riskTheme)}</strong></div><em>重合率 ${item.overlapRate}%</em></div><div class="linked-insight-issue"><span>KYC缺口</span><strong>${escapeHtml(item.kycIssue)}</strong></div><div class="linked-insight-metrics"><span>重合样本 <b>${riskScaled(item.sampleCount)}件</b></span><span>较上期 <b>+${item.change}%</b></span><span>承接部门 <b>${escapeHtml(item.department)}</b></span></div><p>${escapeHtml(item.explanation)}</p><footer>查看联动依据 ${icon("arrow-right")}</footer></button>`).join("")}</div></article>
     <article class="closure-status-panel"><div class="cell-title"><strong>提示与整改闭环</strong><span>风险提示和业务反馈</span></div><div class="closure-status-counts"><div><strong>${statusCounts.draft}</strong><span>待发布</span></div><div><strong>${statusCounts.sent + statusCounts.received}</strong><span>已发送</span></div><div><strong>${statusCounts.active}</strong><span>整改中</span></div><div><strong>${statusCounts.complete}</strong><span>已完成</span></div></div><div class="latest-feedback"><span>${icon("message-square-text")}</span><div><strong>最近业务反馈</strong><small>${escapeHtml(profile.latestFeedback)}</small></div></div><button data-risk-view="action" type="button">进入提示与整改台 ${icon("arrow-right")}</button></article>
   </section>`;
 }
@@ -6029,7 +6123,7 @@ function renderRiskOverview() {
     <section class="risk-management-cockpit">
       <div class="risk-management-main">
         <article class="risk-trend-panel"><header><div><span>STR RISK TREND</span><h2>风险趋势与高频主题</h2><p>基于人工确认并上报结果，观察风险主题和交易结构变化。</p></div><strong>${riskScaled(83)}<small>本期STR</small></strong></header><div class="risk-trend-content"><section class="risk-chart-cell"><div class="cell-title"><strong>十二期风险主题趋势</strong><span>点击数据点进入提示编制</span></div>${renderRiskLineChart(strSeries, { id: "strTrendChart", labels: management.months, maxValue: strMax })}</section><section class="risk-rank-cell"><div class="cell-title"><strong>高频风险类型</strong><span>数量 / 环比</span></div><div class="risk-theme-ranking">${management.str.themes.map((item, index) => `<button data-open-risk-action="${item.id}" type="button"><i>${index + 1}</i><span><strong>${item.label}</strong><em><b style="width:${item.share}%"></b></em></span><small>${riskScaled(item.count)}件</small><b>+${item.change}%</b></button>`).join("")}</div></section></div></article>
-        <article class="risk-detail-panel"><section class="risk-heat-cell"><div class="cell-title"><strong>机构风险热力</strong><span>点击选择当前关注机构</span></div>${renderRiskHeatmap(management.str.heatmap)}</section><section><div class="cell-title"><strong>KYC问题原因</strong><span>按问题记录聚合</span></div>${renderRiskDonut(management.kyc.issueDistribution)}</section><section><div class="cell-title"><strong>待更新或缺失字段</strong><span>${riskScaled(216)}项待整改</span></div><div class="kyc-field-ranking">${management.kyc.fields.map((item) => `<div><span><strong>${item.label}</strong><small>${riskScaled(item.count)}项</small></span><i><b style="width:${item.rate * 3.2}%"></b></i><em>${item.rate}%</em></div>`).join("")}</div></section><section class="risk-chart-cell compact-trend"><div class="cell-title"><strong>数据质量趋势</strong><span>问题率下降，整改率上升</span></div>${renderRiskLineChart(kycSeries, { id: "kycTrendChart", labels: management.months, maxValue: 100, percent: true })}</section></article>
+        <article class="risk-detail-panel"><section class="risk-diagnostic-cell risk-heat-cell"><div class="cell-title"><strong>机构风险主题集中度矩阵</strong><span>按机构 × 已确认可疑主题</span></div>${renderRiskHeatmap(management.str.heatmap)}</section><section class="risk-diagnostic-cell kyc-cause-cell"><div class="cell-title"><strong>本期KYC信息质量问题构成</strong><span>按去重问题记录聚合</span></div>${renderRiskDonut(management.kyc.issueDistribution)}</section><section><div class="cell-title"><strong>待更新或缺失字段</strong><span>${riskScaled(216)}项待整改</span></div><div class="kyc-field-ranking">${management.kyc.fields.map((item) => `<div><span><strong>${item.label}</strong><small>${riskScaled(item.count)}项</small></span><i><b style="width:${item.rate * 3.2}%"></b></i><em>${item.rate}%</em></div>`).join("")}</div></section><section class="risk-chart-cell compact-trend"><div class="cell-title"><strong>KYC质量整改趋势</strong><span>问题率下降，整改完成率上升</span></div>${renderRiskLineChart(kycSeries, { id: "kycTrendChart", labels: management.months, maxValue: 100, percent: true })}</section></article>
       </div>
       ${renderCurrentInstitutionDiagnosis()}
     </section>
